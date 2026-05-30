@@ -32,6 +32,10 @@
                     <i class="fas fa-robot"></i>
                     <span>AI Mentor</span>
                 </li>
+                <li data-section="schedule">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Schedule</span>
+                </li>
             </ul>
         </nav>
 
@@ -144,6 +148,23 @@
                         <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
                         <button id="voiceBtn"><i class="fas fa-microphone"></i></button>
                     </div>
+                </div>
+            </section>
+
+            <!-- Schedule Section -->
+            <section id="schedule" class="content-section">
+                <header>
+                    <h1>Daily Operations</h1>
+                    <p>Manage your daily hacking tasks and training objectives.</p>
+                </header>
+                <div class="schedule-container">
+                    <div class="task-input-group">
+                        <input type="text" id="taskInput" placeholder="Enter new objective...">
+                        <button id="addTaskBtn" class="btn-small"><i class="fas fa-plus"></i> Add Task</button>
+                    </div>
+                    <ul class="task-list" id="taskList">
+                        <!-- Tasks will be added here dynamically -->
+                    </ul>
                 </div>
             </section>
         </main>
