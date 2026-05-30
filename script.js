@@ -1,7 +1,103 @@
+const LESSONS = {
+    'linux-basics': {
+        title: 'Linux Command Line',
+        content: `
+            <h3>Mastering the Terminal</h3>
+            <p>In cybersecurity, the Linux terminal is your primary tool. Most hacking tools and servers run on Linux.</p>
+            <ul>
+                <li><strong>ls</strong>: List files in the current directory.</li>
+                <li><strong>cd</strong>: Change directory.</li>
+                <li><strong>cat</strong>: Read the content of a file.</li>
+                <li><strong>whoami</strong>: Show current user.</li>
+            </ul>
+            <p><strong>Your Task:</strong> Use the terminal to find the hidden 'secret.txt' file in the current directory and read its content.</p>
+        `,
+        practiceGoal: 'cat secret.txt',
+        successMessage: 'Great job! You found the secret flag. You are learning how to explore systems.'
+    },
+    'python-basics': {
+        title: 'Python for Hackers',
+        content: `
+            <h3>Introduction to Python</h3>
+            <p>Python is the most popular language for writing exploits and security tools.</p>
+            <p>Example of a simple script:</p>
+            <pre>print("Hello Hacker")</pre>
+            <p><strong>Your Task:</strong> In the terminal, type 'python' to enter the Python simulator and then type 'print("hacking")' to complete this task.</p>
+        `,
+        practiceGoal: 'print("hacking")',
+        successMessage: 'Excellent! You just ran your first Python command. Python skills are essential for automation.'
+    },
+    'web-vulnerabilities': {
+        title: 'Web App Security',
+        content: `
+            <h3>Understanding SQL Injection</h3>
+            <p>SQL Injection allows attackers to bypass login screens or steal database data.</p>
+            <p>A common payload is: <code>' OR 1=1 --</code></p>
+            <p><strong>Your Task:</strong> Simulate a SQL injection by typing the payload into the terminal to 'bypass' the security check.</p>
+        `,
+        practiceGoal: "' or 1=1 --",
+        successMessage: 'Vulnerability exploited! You now understand how a simple payload can bypass authentication.'
+    }
+};
+
+let currentLessonId = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     // Navigation
     const navLinks = document.querySelectorAll('.nav-links li');
     const sections = document.querySelectorAll('.content-section');
+
+    const academySection = document.getElementById('academy');
+    const modulesList = document.getElementById('modulesList');
+    const lessonViewer = document.getElementById('lessonViewer');
+    const lessonTitle = document.getElementById('lessonTitle');
+    const lessonContent = document.getElementById('lessonContent');
+    const closeLessonBtn = document.getElementById('closeLesson');
+    const startPracticeBtn = document.getElementById('startPractice');
+
+    function loadLesson(id) {
+        const lesson = LESSONS[id];
+        if (!lesson) return;
+        currentLessonId = id;
+        lessonTitle.textContent = lesson.title;
+        lessonContent.innerHTML = lesson.content;
+        modulesList.style.display = 'none';
+        lessonViewer.style.display = 'block';
+    }
+
+    function closeLesson() {
+        lessonViewer.style.display = 'none';
+        modulesList.style.display = 'grid';
+        currentLessonId = null;
+    }
+
+    document.querySelectorAll('.start-lesson-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const card = btn.closest('.module-card');
+            const id = card.getAttribute('data-lesson');
+            loadLesson(id);
+        });
+    });
+
+    closeLessonBtn.addEventListener('click', closeLesson);
+
+    startPracticeBtn.addEventListener('click', () => {
+        const lesson = LESSONS[currentLessonId];
+        if (!lesson) return;
+
+        // Switch to practice section
+        navLinks.forEach(l => l.classList.remove('active'));
+        document.querySelector('[data-section="practice"]').classList.add('active');
+        sections.forEach(s => s.classList.remove('active'));
+        document.getElementById('practice').classList.add('active');
+
+        // Update task display
+        document.getElementById('currentTaskTitle').textContent = `Task: ${lesson.title}`;
+        document.getElementById('currentTaskDesc').innerHTML = lesson.content;
+
+        // Focus terminal
+        document.getElementById('terminalInput').focus();
+    });
 
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -36,7 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     terminalInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-            const input = terminalInput.value.trim().toLowerCase();
+            const rawInput = terminalInput.value.trim();
+            const input = rawInput.toLowerCase();
             if (input === '') return;
 
             // Append input to output
@@ -45,13 +142,27 @@ document.addEventListener('DOMContentLoaded', () => {
             promptSpan.className = 'prompt';
             promptSpan.textContent = 'root@cybersec:~$ ';
             inputLine.appendChild(promptSpan);
-            const textNode = document.createTextNode(terminalInput.value);
+            const textNode = document.createTextNode(rawInput);
             inputLine.appendChild(textNode);
             terminalBody.insertBefore(inputLine, terminalInput.parentElement);
 
             // Process command
             const outputLine = document.createElement('div');
             outputLine.className = 'terminal-output';
+
+            // Check Practice Goal Validation
+            if (currentLessonId && LESSONS[currentLessonId]) {
+                const goal = LESSONS[currentLessonId].practiceGoal;
+                if (input === goal.toLowerCase()) {
+                    outputLine.textContent = LESSONS[currentLessonId].successMessage;
+                    outputLine.style.color = 'var(--primary-neon)';
+                    terminalBody.insertBefore(outputLine, terminalInput.parentElement);
+                    speak(LESSONS[currentLessonId].successMessage);
+                    terminalInput.value = '';
+                    terminalBody.scrollTop = terminalBody.scrollHeight;
+                    return;
+                }
+            }
 
             if (input === 'clear') {
                 const lines = terminalBody.querySelectorAll('div:not(.terminal-input-line)');
@@ -101,25 +212,36 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage(text, 'user');
         userInput.value = '';
 
-        // Simple AI logic with "error checking" and knowledge base
+        // Advanced AI logic with Context Awareness
         setTimeout(() => {
-            let response = "I'm analyzing your input...";
+            let response = "";
             const lowText = text.toLowerCase();
 
-            if (lowText.includes('hello') || lowText.includes('hi')) {
-                response = "Greetings, apprentice. Ready to learn about cybersecurity? I can guide you through Linux, Networking, or Python.";
-            } else if (lowText.includes('hack') && lowText.includes('facebook')) {
-                response = "Note: Hacking social media accounts is generally illegal and unethical. My purpose is to teach you Ethical Hacking—using your skills for defense and security testing with permission.";
-            } else if (lowText.includes('nmap')) {
-                response = "Nmap (Network Mapper) is an essential tool for network discovery and security auditing. Would you like a tutorial on basic scanning flags?";
-            } else if (lowText.includes('sql injection')) {
-                response = "SQL Injection is a vulnerability where an attacker can interfere with the queries an application makes to its database. Always use prepared statements to prevent this!";
-            } else if (lowText.includes('ping')) {
-                response = "Correct! 'ping' is used to test the reachability of a host on an IP network. It's often the first step in reconnaissance.";
-            } else if (lowText.includes('<script>')) {
-                response = "I see you're typing script tags. Are you practicing Cross-Site Scripting (XSS)? Remember to sanitize all user inputs to defend against this.";
-            } else {
-                response = "That's an interesting topic. In cybersecurity, it's vital to understand the underlying protocol. Should we look into that further?";
+            // Context-based responses
+            if (currentLessonId === 'linux-basics') {
+                if (lowText.includes('how') || lowText.includes('help') || lowText.includes('hint')) {
+                    response = "You are currently learning Linux. To find the secret, try using the 'ls' command to see files, and then 'cat secret.txt' to read it.";
+                }
+            } else if (currentLessonId === 'python-basics') {
+                if (lowText.includes('how') || lowText.includes('help') || lowText.includes('hint')) {
+                    response = "In Python, we use the print() function to display text. Try typing 'print(\"hacking\")' in the simulator.";
+                }
+            }
+
+            if (!response) {
+                if (lowText.includes('hello') || lowText.includes('hi')) {
+                    response = "Greetings, apprentice. I am your AI Mentor. I can guide you through our lessons. Which topic would you like to explore: Linux, Python, or Web Security?";
+                } else if (lowText.includes('hack') && lowText.includes('facebook')) {
+                    response = "Note: Hacking accounts without permission is illegal. I focus on Ethical Hacking. Learn how to protect systems instead!";
+                } else if (lowText.includes('nmap')) {
+                    response = "Nmap is for network scanning. It helps hackers find open doors (ports) on a server.";
+                } else if (lowText.includes('sql injection')) {
+                    response = "SQL Injection happens when you don't clean user input before putting it in a database query. Check out our Web Vulnerabilities lesson!";
+                } else if (lowText.includes('who are you') || lowText.includes('your name')) {
+                    response = "I am Jules, your AI Cyber Mentor. My mission is to teach you how to become a professional ethical hacker.";
+                } else {
+                    response = "That's a good question. In cybersecurity, we always look for the 'root cause'. Tell me more about what you're trying to achieve.";
+                }
             }
 
             addMessage(response, 'ai');
