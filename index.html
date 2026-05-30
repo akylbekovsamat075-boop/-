@@ -1,314 +1,178 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Interactive Flowers</title>
-  <link rel="stylesheet" href="./style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSec Academy - Learn Ethical Hacking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-user-secret"></i>
+                <span>CyberSec Academy</span>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-section="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li data-section="academy">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Academy</span>
+                </li>
+                <li data-section="practice">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Practice</span>
+                </li>
+                <li data-section="ai-mentor">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Mentor</span>
+                </li>
+            </ul>
+        </nav>
 
-<body class="not-loaded">
-  <div class="night"></div>
-  <div class="flowers">
-    <div class="flower flower--1">
-      <div class="flower__leafs flower__leafs--1">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
+        <!-- Main Content -->
+        <main class="content-area">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <header>
+                    <h1>Welcome, Initiate</h1>
+                    <p>Your journey into ethical hacking starts here.</p>
+                </header>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Overall Progress</h3>
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Skill Levels</h3>
+                        <canvas id="skillChart"></canvas>
+                    </div>
+                </div>
+            </section>
 
-        <div class="flower__light flower__light--1"></div>
-        <div class="flower__light flower__light--2"></div>
-        <div class="flower__light flower__light--3"></div>
-        <div class="flower__light flower__light--4"></div>
-        <div class="flower__light flower__light--5"></div>
-        <div class="flower__light flower__light--6"></div>
-        <div class="flower__light flower__light--7"></div>
-        <div class="flower__light flower__light--8"></div>
+            <!-- Academy Section -->
+            <section id="academy" class="content-section">
+                <header>
+                    <h1>Learning Modules</h1>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search lessons...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </header>
+                <div class="modules-list" id="modulesList">
+                    <div class="module-card">
+                        <i class="fas fa-terminal"></i>
+                        <h3>Linux Basics</h3>
+                        <p>Learn the command line, file systems, and user permissions.</p>
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Introduction to Linux</span>
+                        </div>
+                        <button class="btn-small">Start Lesson</button>
+                    </div>
+                    <div class="module-card">
+                        <i class="fas fa-network-wired"></i>
+                        <h3>Networking 101</h3>
+                        <p>Understand TCP/IP, DNS, HTTP, and how the internet works.</p>
+                        <button class="btn-small">Start Lesson</button>
+                    </div>
+                    <div class="module-card">
+                        <i class="fas fa-code"></i>
+                        <h3>Python for Hackers</h3>
+                        <p>Automate tasks and write your own security tools.</p>
+                        <button class="btn-small">Start Lesson</button>
+                    </div>
+                    <div class="module-card">
+                        <i class="fas fa-bug"></i>
+                        <h3>Web Vulnerabilities</h3>
+                        <p>Explore SQLi, XSS, and CSRF attacks and defenses.</p>
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Web App Hacking Tutorial</span>
+                        </div>
+                        <button class="btn-small">Start Lesson</button>
+                    </div>
+                    <div class="module-card">
+                        <i class="fas fa-search"></i>
+                        <h3>Information Gathering</h3>
+                        <p>Master OSINT and active reconnaissance techniques.</p>
+                        <button class="btn-small">Start Lesson</button>
+                    </div>
+                    <div class="module-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Ethical Hacking</h3>
+                        <p>The methodologies and ethics of a professional hacker.</p>
+                        <button class="btn-small">Start Lesson</button>
+                    </div>
+                </div>
+            </section>
 
-      </div>
-      <div class="flower__line">
-        <div class="flower__line__leaf flower__line__leaf--1"></div>
-        <div class="flower__line__leaf flower__line__leaf--2"></div>
-        <div class="flower__line__leaf flower__line__leaf--3"></div>
-        <div class="flower__line__leaf flower__line__leaf--4"></div>
-        <div class="flower__line__leaf flower__line__leaf--5"></div>
-        <div class="flower__line__leaf flower__line__leaf--6"></div>
-      </div>
-    </div>
+            <!-- Practice Section -->
+            <section id="practice" class="content-section">
+                <header>
+                    <h1>Practice Lab</h1>
+                    <p>Hands-on hacking simulations.</p>
+                </header>
+                <div class="practice-modules">
+                    <div class="stat-card">
+                        <h3>Current Task: System Reconnaissance</h3>
+                        <p>Use the terminal below to find the 'secret.txt' file and read its content.</p>
+                        <div class="task-hint">Hint: use 'ls' and 'cat'</div>
+                    </div>
+                </div>
+            </section>
 
-    <div class="flower flower--2">
-      <div class="flower__leafs flower__leafs--2">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
+            <!-- AI Mentor Section -->
+            <section id="ai-mentor" class="content-section">
+                <header>
+                    <h1>AI Cyber Mentor</h1>
+                    <p>Ask anything about cybersecurity. I can speak and check your errors.</p>
+                </header>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message ai">
+                            Hello! I am your AI Cyber Mentor. I can teach you in English, check your code, and correct your mistakes. How can I help you today?
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="userInput" placeholder="Type your message...">
+                        <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+                        <button id="voiceBtn"><i class="fas fa-microphone"></i></button>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-        <div class="flower__light flower__light--1"></div>
-        <div class="flower__light flower__light--2"></div>
-        <div class="flower__light flower__light--3"></div>
-        <div class="flower__light flower__light--4"></div>
-        <div class="flower__light flower__light--5"></div>
-        <div class="flower__light flower__light--6"></div>
-        <div class="flower__light flower__light--7"></div>
-        <div class="flower__light flower__light--8"></div>
-
-      </div>
-      <div class="flower__line">
-        <div class="flower__line__leaf flower__line__leaf--1"></div>
-        <div class="flower__line__leaf flower__line__leaf--2"></div>
-        <div class="flower__line__leaf flower__line__leaf--3"></div>
-        <div class="flower__line__leaf flower__line__leaf--4"></div>
-      </div>
-    </div>
-
-    <div class="flower flower--3">
-      <div class="flower__leafs flower__leafs--3">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
-
-        <div class="flower__light flower__light--1"></div>
-        <div class="flower__light flower__light--2"></div>
-        <div class="flower__light flower__light--3"></div>
-        <div class="flower__light flower__light--4"></div>
-        <div class="flower__light flower__light--5"></div>
-        <div class="flower__light flower__light--6"></div>
-        <div class="flower__light flower__light--7"></div>
-        <div class="flower__light flower__light--8"></div>
-
-      </div>
-      <div class="flower__line">
-        <div class="flower__line__leaf flower__line__leaf--1"></div>
-        <div class="flower__line__leaf flower__line__leaf--2"></div>
-        <div class="flower__line__leaf flower__line__leaf--3"></div>
-        <div class="flower__line__leaf flower__line__leaf--4"></div>
-      </div>
-    </div>
-
-    <div class="grow-ans" style="--d:1.2s">
-      <div class="flower__g-long">
-        <div class="flower__g-long__top"></div>
-        <div class="flower__g-long__bottom"></div>
-      </div>
-    </div>
-
-    <div class="growing-grass">
-      <div class="flower__grass flower__grass--1">
-        <div class="flower__grass--top"></div>
-        <div class="flower__grass--bottom"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--1"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--2"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--3"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--4"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--5"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--6"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--7"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--8"></div>
-        <div class="flower__grass__overlay"></div>
-      </div>
-    </div>
-
-    <div class="growing-grass">
-      <div class="flower__grass flower__grass--2">
-        <div class="flower__grass--top"></div>
-        <div class="flower__grass--bottom"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--1"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--2"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--3"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--4"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--5"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--6"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--7"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--8"></div>
-        <div class="flower__grass__overlay"></div>
-      </div>
-    </div>
-
-    <div class="grow-ans" style="--d:2.4s">
-      <div class="flower__g-right flower__g-right--1">
-        <div class="leaf"></div>
-      </div>
-    </div>
-
-    <div class="grow-ans" style="--d:2.8s">
-      <div class="flower__g-right flower__g-right--2">
-        <div class="leaf"></div>
-      </div>
-    </div>
-
-    <div class="grow-ans" style="--d:2.8s">
-      <div class="flower__g-front">
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--1">
-          <div class="flower__g-front__leaf"></div>
+        <!-- Terminal Section -->
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <span><i class="fas fa-terminal"></i> system_terminal.exe</span>
+                <div class="terminal-controls">
+                    <span class="minimize">_</span>
+                    <span class="maximize">□</span>
+                    <span class="close">×</span>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+                <div class="terminal-output">
+                    Welcome to CyberSec Academy Terminal v1.0.0
+                    Type 'help' to see available commands.
+                </div>
+                <div class="terminal-input-line">
+                    <span class="prompt">root@cybersec:~$</span>
+                    <input type="text" id="terminalInput" autofocus>
+                </div>
+            </div>
         </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--2">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--3">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--4">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--5">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--6">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--7">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--8">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__line"></div>
-      </div>
     </div>
 
-    <div class="grow-ans" style="--d:3.2s">
-      <div class="flower__g-fr">
-        <div class="leaf"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--1"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--2"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--3"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--4"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--5"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--6"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--7"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--8"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--0">
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:2.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.4s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--1">
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.8s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--2">
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.4s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--3">
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--4">
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--5">
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--6">
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.4s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.6s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.8s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--7">
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.5s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-  </div>
-</body>
-<!-- partial -->
-  <script  src="./script.js"></script>
-
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
