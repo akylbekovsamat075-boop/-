@@ -37,6 +37,50 @@ const LESSONS = {
         `,
         practiceGoal: "' or 1=1 --",
         successMessage: 'Vulnerability exploited! You now understand how a simple payload can bypass authentication.'
+    },
+    'networking-101': {
+        title: 'Networking Basics',
+        content: `
+            <h3>How Computers Talk</h3>
+            <p>Networking is the backbone of the internet. You need to understand how data moves.</p>
+            <ul>
+                <li><strong>IP Address</strong>: Your digital home address.</li>
+                <li><strong>Port</strong>: A specific door on that address.</li>
+                <li><strong>HTTP</strong>: The language of the web.</li>
+            </ul>
+            <p><strong>Your Task:</strong> Use the simulated 'nmap' command in the terminal to scan for open ports on a target server.</p>
+        `,
+        practiceGoal: "nmap",
+        successMessage: 'Port scan complete! You have identified open services on the target. This is the first step of an attack.'
+    },
+    'info-gathering': {
+        title: 'Information Gathering',
+        content: `
+            <h3>OSINT and Recon</h3>
+            <p>Before hacking, you must know your target. This is called reconnaissance.</p>
+            <p>Open Source Intelligence (OSINT) involves using public data like social media and DNS records.</p>
+            <p><strong>Your Task:</strong> Use the 'status' command to check the current system info and identify the OS version.</p>
+        `,
+        practiceGoal: "status",
+        successMessage: 'Reconnaissance successful. Knowing the system status helps you choose the right exploit.'
+    },
+    'ethical-hacking': {
+        title: 'The Hacker Mindset',
+        content: `
+            <h3>Rules of Engagement</h3>
+            <p>An ethical hacker (White Hat) always has permission and follows a code of ethics.</p>
+            <p>Steps of a penetration test:</p>
+            <ol>
+                <li>Reconnaissance</li>
+                <li>Scanning</li>
+                <li>Exploitation</li>
+                <li>Maintaining Access</li>
+                <li>Reporting</li>
+            </ol>
+            <p><strong>Your Task:</strong> Identify yourself as a privileged user in the terminal by typing 'whoami'.</p>
+        `,
+        practiceGoal: "whoami",
+        successMessage: 'Identity confirmed. You are operating with root privileges. Use this power responsibly!'
     }
 };
 
@@ -218,29 +262,44 @@ document.addEventListener('DOMContentLoaded', () => {
             const lowText = text.toLowerCase();
 
             // Context-based responses
-            if (currentLessonId === 'linux-basics') {
+            if (currentLessonId) {
+                const lesson = LESSONS[currentLessonId];
                 if (lowText.includes('how') || lowText.includes('help') || lowText.includes('hint')) {
-                    response = "You are currently learning Linux. To find the secret, try using the 'ls' command to see files, and then 'cat secret.txt' to read it.";
-                }
-            } else if (currentLessonId === 'python-basics') {
-                if (lowText.includes('how') || lowText.includes('help') || lowText.includes('hint')) {
-                    response = "In Python, we use the print() function to display text. Try typing 'print(\"hacking\")' in the simulator.";
+                    response = `You are currently in the ${lesson.title} lesson. ${lesson.content.split('<strong>Your Task:</strong>')[1] || "Try to follow the instructions in the lesson content."}`;
+                } else if (lowText.includes('next') || lowText.includes('done')) {
+                    response = "If you have completed the practice goal in the terminal, you can move to the next module in the Academy section.";
                 }
             }
 
             if (!response) {
+                const fallbacks = [
+                    "In cybersecurity, continuous learning is the key. What else can I explain to you?",
+                    "That's an interesting perspective. Have you considered the security implications of that?",
+                    "I am here to help you become a White Hat hacker. Ask me about tools like Nmap, Python, or Linux.",
+                    "The 'Hacker' mindset is all about curiosity. Keep asking questions!",
+                    "Did you know? Most security breaches are caused by weak passwords. Always use multi-factor authentication!"
+                ];
+
                 if (lowText.includes('hello') || lowText.includes('hi')) {
-                    response = "Greetings, apprentice. I am your AI Mentor. I can guide you through our lessons. Which topic would you like to explore: Linux, Python, or Web Security?";
-                } else if (lowText.includes('hack') && lowText.includes('facebook')) {
-                    response = "Note: Hacking accounts without permission is illegal. I focus on Ethical Hacking. Learn how to protect systems instead!";
+                    response = "Greetings, apprentice. I am Jules, your AI Mentor. I can teach you Linux, Python, Networking, and Web Security. Where should we begin?";
+                } else if (lowText.includes('hack') && (lowText.includes('facebook') || lowText.includes('instagram') || lowText.includes('account'))) {
+                    response = "I cannot help you hack personal accounts. That is illegal. I can only teach you Ethical Hacking for professional security testing.";
                 } else if (lowText.includes('nmap')) {
-                    response = "Nmap is for network scanning. It helps hackers find open doors (ports) on a server.";
-                } else if (lowText.includes('sql injection')) {
-                    response = "SQL Injection happens when you don't clean user input before putting it in a database query. Check out our Web Vulnerabilities lesson!";
+                    response = "Nmap is short for Network Mapper. It's used to discover hosts and services on a computer network by sending packets and analyzing the responses.";
+                } else if (lowText.includes('sql injection') || lowText.includes('sqli')) {
+                    response = "SQL Injection is a web security vulnerability that allows an attacker to interfere with the queries that an application makes to its database. It's one of the most common web attacks.";
+                } else if (lowText.includes('python')) {
+                    response = "Python is a high-level programming language known for its readability. In hacking, it's used for everything from network scanning to exploit development.";
+                } else if (lowText.includes('linux')) {
+                    response = "Linux is an open-source operating system. Most security tools are built for Linux because of its flexibility and powerful command-line interface.";
                 } else if (lowText.includes('who are you') || lowText.includes('your name')) {
-                    response = "I am Jules, your AI Cyber Mentor. My mission is to teach you how to become a professional ethical hacker.";
+                    response = "My name is Jules. I am an AI designed to teach you the art of ethical hacking and cybersecurity from scratch.";
+                } else if (lowText.includes('thank')) {
+                    response = "You're welcome! Keep practicing, that's how you've become a master.";
+                } else if (lowText.includes('search')) {
+                    response = "I can search our internal database for you. What topic are you looking for?";
                 } else {
-                    response = "That's a good question. In cybersecurity, we always look for the 'root cause'. Tell me more about what you're trying to achieve.";
+                    response = fallbacks[Math.floor(Math.random() * fallbacks.length)];
                 }
             }
 
