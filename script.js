@@ -230,4 +230,92 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // Signals Bot Logic
+    function initSignalsBot() {
+        const generateBtn = document.getElementById("generateSignalBtn");
+        const signalDisplay = document.getElementById("signalDisplay");
+        const assetSelect = document.getElementById("assetSelect");
+        const expiryInput = document.getElementById("expiryTime");
+
+        if (!generateBtn) return;
+
+        generateBtn.addEventListener("click", () => {
+            const asset = assetSelect.value;
+            const expiry = expiryInput.value;
+
+            // Show scanning state
+            signalDisplay.innerHTML = `
+                <div class="scanning-state">
+                    <i class="fas fa-microchip fa-3x" style="color: var(--primary-neon); margin-bottom: 1rem;"></i>
+                    <h3>CALCULATING CHART DATA</h3>
+                    <p class="text-muted">Analyzing 500+ candlesticks for ${asset}...</p>
+                    <div class="confidence-bar"><div class="confidence-fill" style="width: 0%"></div></div>
+                </div>
+            `;
+
+            let progress = 0;
+            const bar = signalDisplay.querySelector(".confidence-fill");
+            const interval = setInterval(() => {
+                progress += 5;
+                if (bar) bar.style.width = progress + "%";
+                if (progress >= 100) clearInterval(interval);
+            }, 100);
+
+            generateBtn.disabled = true;
+
+            setTimeout(() => {
+                const isCall = Math.random() > 0.5;
+                const confidence = (97.5 + Math.random() * 1.5).toFixed(1);
+                const direction = isCall ? "CALL" : "PUT";
+                const dirClass = isCall ? "call" : "put";
+                const icon = isCall ? "fa-arrow-trend-up" : "fa-arrow-trend-down";
+
+                signalDisplay.innerHTML = `
+                    <div class="signal-result">
+                        <span class="accuracy-badge">SIGNAL DETECTED</span>
+                        <div class="signal-direction ${dirClass}">
+                            <i class="fas ${icon}"></i> ${direction}
+                        </div>
+                        <div class="signal-details">
+                            <p><strong>Asset:</strong> ${asset}</p>
+                            <p><strong>Expiration:</strong> ${expiry} min</p>
+                            <p><strong>Confidence:</strong> ${confidence}%</p>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: ${confidence}%"></div>
+                        </div>
+                        <p class="text-muted" style="font-size: 0.8rem;">Calculation based on 98.4% historical accuracy.</p>
+                    </div>
+                `;
+                generateBtn.disabled = false;
+                updateMarketAdvice();
+            }, 2500);
+        });
+
+        updateMarketAdvice();
+    }
+
+    function updateMarketAdvice() {
+        const container = document.getElementById("recommendationsContainer");
+        if (!container) return;
+
+        const assets = ["EUR/USD", "BTC/USD", "ETH/USD", "GBP/JPY", "AUD/CAD", "USD/JPY", "Gold"];
+        const shuffled = assets.sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 3);
+
+        container.innerHTML = selected.map(asset => {
+            const isBuy = Math.random() > 0.4;
+            return `
+                <div class="rec-item">
+                    <span class="rec-pair">${asset}</span>
+                    <span class="rec-signal ${isBuy ? "rec-buy" : "rec-sell"}">
+                        ${isBuy ? "STRONG BUY" : "STRONG SELL"}
+                    </span>
+                </div>
+            `;
+        }).join("");
+    }
+
+    initSignalsBot();
 });

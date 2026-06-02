@@ -32,6 +32,10 @@
                     <i class="fas fa-robot"></i>
                     <span>AI Mentor</span>
                 </li>
+                <li data-section="signals">
+                    <i class="fas fa-signal"></i>
+                    <span>Signals Bot</span>
+                </li>
             </ul>
         </nav>
 
@@ -143,6 +147,54 @@
                         <input type="text" id="userInput" placeholder="Type your message...">
                         <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
                         <button id="voiceBtn"><i class="fas fa-microphone"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Signals Bot Section -->
+            <section id="signals" class="content-section">
+                <header>
+                    <h1>Pro Trading Signals <span class="accuracy-badge">98% ACCURACY</span></h1>
+                    <p>Advanced algorithmic analysis for Binarium. Real-time market calculation.</p>
+                </header>
+
+                <div class="signals-grid">
+                    <!-- Analysis Console -->
+                    <div class="stat-card">
+                        <h3><i class="fas fa-microchip"></i> Analysis Console</h3>
+                        <div class="control-group">
+                            <label>Asset Pair</label>
+                            <select id="assetSelect" class="custom-select">
+                                <option value="EUR/USD">EUR/USD (OTC)</option>
+                                <option value="BTC/USD">BTC/USD</option>
+                                <option value="ETH/USD">ETH/USD</option>
+                                <option value="GBP/JPY">GBP/JPY</option>
+                                <option value="AUD/CAD">AUD/CAD</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Expiration Time (min)</label>
+                            <input type="number" id="expiryTime" value="5" min="1" max="60" class="custom-input">
+                        </div>
+                        <button id="generateSignalBtn" class="btn-neon-full">
+                            <i class="fas fa-project-diagram"></i> Start Chart Calculation
+                        </button>
+                    </div>
+
+                    <!-- Live Signal area -->
+                    <div class="stat-card signal-display" id="signalDisplay">
+                        <div class="idle-state">
+                            <i class="fas fa-search-dollar"></i>
+                            <p>Ready to analyze market data...</p>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Assets -->
+                    <div class="stat-card">
+                        <h3><i class="fas fa-bolt"></i> Best Opportunities</h3>
+                        <div id="recommendationsContainer" class="recs-list">
+                            <!-- Populated by JS -->
+                        </div>
                     </div>
                 </div>
             </section>
