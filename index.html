@@ -68,8 +68,22 @@
                         <i class="fas fa-search"></i>
                     </div>
                 </header>
+
+                <!-- Lesson Viewer Modal/Area -->
+                <div id="lessonViewer" class="lesson-viewer" style="display: none;">
+                    <div class="lesson-header">
+                        <button id="closeLesson" class="btn-small"><i class="fas fa-arrow-left"></i> Back to Modules</button>
+                        <h2 id="lessonTitle">Lesson Title</h2>
+                    </div>
+                    <div id="lessonContent" class="lesson-content">
+                        <!-- Content injected here -->
+                    </div>
+                    <div class="lesson-actions">
+                        <button id="startPractice" class="btn-primary">Start Practice</button>
+                    </div>
+                </div>
                 <div class="modules-list" id="modulesList">
-                    <div class="module-card">
+                    <div class="module-card" data-lesson="linux-basics">
                         <i class="fas fa-terminal"></i>
                         <h3>Linux Basics</h3>
                         <p>Learn the command line, file systems, and user permissions.</p>
@@ -77,21 +91,21 @@
                             <i class="fas fa-play-circle"></i>
                             <span>Introduction to Linux</span>
                         </div>
-                        <button class="btn-small">Start Lesson</button>
+                        <button class="btn-small start-lesson-btn">Start Lesson</button>
                     </div>
-                    <div class="module-card">
+                    <div class="module-card" data-lesson="networking-101">
                         <i class="fas fa-network-wired"></i>
                         <h3>Networking 101</h3>
                         <p>Understand TCP/IP, DNS, HTTP, and how the internet works.</p>
-                        <button class="btn-small">Start Lesson</button>
+                        <button class="btn-small start-lesson-btn">Start Lesson</button>
                     </div>
-                    <div class="module-card">
+                    <div class="module-card" data-lesson="python-basics">
                         <i class="fas fa-code"></i>
                         <h3>Python for Hackers</h3>
                         <p>Automate tasks and write your own security tools.</p>
-                        <button class="btn-small">Start Lesson</button>
+                        <button class="btn-small start-lesson-btn">Start Lesson</button>
                     </div>
-                    <div class="module-card">
+                    <div class="module-card" data-lesson="web-vulnerabilities">
                         <i class="fas fa-bug"></i>
                         <h3>Web Vulnerabilities</h3>
                         <p>Explore SQLi, XSS, and CSRF attacks and defenses.</p>
@@ -99,19 +113,19 @@
                             <i class="fas fa-play-circle"></i>
                             <span>Web App Hacking Tutorial</span>
                         </div>
-                        <button class="btn-small">Start Lesson</button>
+                        <button class="btn-small start-lesson-btn">Start Lesson</button>
                     </div>
-                    <div class="module-card">
+                    <div class="module-card" data-lesson="info-gathering">
                         <i class="fas fa-search"></i>
                         <h3>Information Gathering</h3>
                         <p>Master OSINT and active reconnaissance techniques.</p>
-                        <button class="btn-small">Start Lesson</button>
+                        <button class="btn-small start-lesson-btn">Start Lesson</button>
                     </div>
-                    <div class="module-card">
+                    <div class="module-card" data-lesson="ethical-hacking">
                         <i class="fas fa-shield-alt"></i>
                         <h3>Ethical Hacking</h3>
                         <p>The methodologies and ethics of a professional hacker.</p>
-                        <button class="btn-small">Start Lesson</button>
+                        <button class="btn-small start-lesson-btn">Start Lesson</button>
                     </div>
                 </div>
             </section>
@@ -122,11 +136,12 @@
                     <h1>Practice Lab</h1>
                     <p>Hands-on hacking simulations.</p>
                 </header>
-                <div class="practice-modules">
+                <div class="practice-modules" id="practiceContainer">
                     <div class="stat-card">
-                        <h3>Current Task: System Reconnaissance</h3>
-                        <p>Use the terminal below to find the 'secret.txt' file and read its content.</p>
-                        <div class="task-hint">Hint: use 'ls' and 'cat'</div>
+                        <h3 id="currentTaskTitle">Select a lesson to begin practice</h3>
+                        <div id="currentTaskDesc">
+                            <p>Go to the Academy section and start a lesson to see your practice tasks here.</p>
+                        </div>
                     </div>
                 </div>
             </section>
